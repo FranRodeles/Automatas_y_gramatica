@@ -3,7 +3,7 @@ automática de patentes y necesitan un programa que filtre las lecturas errónea
 validar el formato de las patentes del Mercosur utilizadas en Argentina, que consisten exactamente
 en dos letras, seguidas de tres números y terminando con dos letras más (ejemplo: AB123CD).
 Escriban una función utilizando la librería re que verifique si una cadena cumple estrictamente con
-este patrón de inicio a fin."""
+este patrón de inicio a fin.."""
 
 import re
 
