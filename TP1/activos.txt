@@ -1,0 +1,10 @@
+192.168.0.101 Servidor_Web_Principal
+192.168.0.105 Base_de_Datos_1
+192.168.0.106 Base_de_Datos_2_Replica
+192.168.0.110 DNS_Primario
+192.168.0.112 Controlador_Dominio
+192.168.0.115 Proxy_Autenticacion
+192.168.1.50 Sistema_Alumnos_API
+192.168.1.51 Campus_Virtual_Moodle
+192.168.1.60 Servidor_Archivos_Docentes
+192.168.1.65 Sistema_Biblioteca_Koha
