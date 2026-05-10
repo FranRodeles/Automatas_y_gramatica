@@ -1,7 +1,30 @@
 '''
-Versión con nombre de módulo válido para importar la clase Gramatica de forma normal.
-Se mantiene la misma lógica del ejercicio 6.1.
-'''
+	Implemente una clase Gramatica que represente una gramática formal y que permita
+	realizar operaciones básicas.
+	La clase debe incluir al menos:
+	• Constructor: recibe terminales, no terminales, símbolo inicial y producciones.
+	• clasificar(): retorna el tipo de gramática según la jerarquía de Chomsky (0, 1, 2 o 3).
+	• es_regular(): retorna True si la gramática es de Tipo 3.
+	• es_glc(): retorna True si la gramática es de Tipo 2.
+	• __str__(): muestra la gramática de forma legible. 
+	# Gramática para a^n b^n
+	g = Gramatica(
+	 terminales={'a', 'b'},
+	 no_terminales={'S'},
+	 simbolo_inicial='S',
+	 producciones={'S': ['aSb', 'ε']}
+	)
+	print(g.clasificar()) # → 'Tipo 2: Libre de Contexto'
+	print(g.es_regular()) # → False
+	print(g.es_glc()) # → True
+	print(g) # → muestra las producciones
+
+	Además, implemente una función cargar_desde_texto(texto) que permita cargar
+	una gramática desde un string con el siguiente formato:
+	texto = "S -> aSb | ε"
+
+	g = cargar_desde_texto(texto)
+	'''
 
 class Gramatica:
     # Constructor: recibe conjuntos de terminales/no terminales,
@@ -83,3 +106,61 @@ class Gramatica:
             rhss = ' | '.join(self.producciones[A])
             lines.append(f"{A} -> {rhss}")
         return '\n'.join(lines)
+
+
+def cargar_desde_texto(texto):
+	# Carga una gramática desde un string en formato: S -> aSb | ε
+	# Infiere los no terminales (símbolos mayúsculas) y terminales
+	producciones = {}
+	no_terminales = set()
+	terminales = set()
+
+	for raw in texto.splitlines():
+		linea = raw.strip()
+		# saltamos líneas vacías o comentarios
+		if not linea or linea.startswith('#'):
+			continue
+
+		# verificamos que tenga el formato LHS -> RHS
+		if '->' not in linea:
+			continue
+
+		# separamos LHS y RHS
+		lhs, rhs = linea.split('->', 1)
+		lhs = lhs.strip()
+		# el LHS es un no-terminal
+		no_terminales.add(lhs)
+		# el RHS puede tener alternativas separadas por |
+		alternativas = [alt.strip() for alt in rhs.split('|')]
+		producciones.setdefault(lhs, [])
+		for alt in alternativas:
+			producciones[lhs].append(alt)
+			if alt != 'ε':
+				# extraemos caracteres individuales para inferir NT y terminales
+				for ch in alt:
+					if ch.isupper():
+						no_terminales.add(ch)
+					else:
+						terminales.add(ch)
+
+	# el símbolo inicial es la primera LHS
+	simbolo_inicial = next(iter(producciones)) if producciones else ''
+    # Devuelve un objeto Gramatica con los conjuntos y producciones inferidos
+	return Gramatica(terminales=terminales, no_terminales=no_terminales, simbolo_inicial=simbolo_inicial, producciones=producciones)
+
+
+if __name__ == '__main__':
+    # Ejemplo de uso sencillo: gramática para a^n b^n (no regular, sí libre de contexto)
+    texto = 'S -> aSb | ε'
+    g = cargar_desde_texto(texto)
+    print('Producciones:')
+    print(g)
+    print('Clasificación:', g.clasificar())
+    print('Es regular?', g.es_regular())
+    print('Es GLC?', g.es_glc())
+
+
+
+
+
+
