@@ -15,14 +15,14 @@ TransitionValue = Tuple[State, Symbol, Direction]
 def build_normalizer_tm(extra_symbols: Iterable[Symbol] | None = None) -> TuringMachine:
     """Construye la MT de normalizacion selectiva con turing_machine.
 
-    La MT conserva letras, digitos, espacios y simbolos criticos: $ . : /
+    La MT conserva letras, digitos, espacios y simbolos criticos: $ £ € . : /
     Cualquier otro simbolo se reemplaza por un espacio en la cinta.
 
     Returns:
         Instancia de TuringMachine configurada.
     """
     blank = ""
-    critical_symbols = set("$.:/")
+    critical_symbols = set("$£€.:/")
     accepted_symbols = set(
         "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz"
@@ -114,9 +114,9 @@ def formal_definition() -> str:
         Definicion formal (Q, Sigma, Gamma, delta, q0, F).
     """
     q_set = "{q0, qa, qr}"
-    sigma_accepted = "{letras, digitos, espacio, $, ., :, /}"
+    sigma_accepted = "{letras, digitos, espacio, $, £, €, ., :, /}"
     sigma_rejected = "{cualquier otro simbolo}"
-    gamma_set = "{letras, digitos, espacio, $, ., :, /, blanco}"
+    gamma_set = "{letras, digitos, espacio, $, £, €, ., :, /, blanco}"
 
     lines = [
         "M = (Q, Sigma, Gamma, delta, q0, F)",
