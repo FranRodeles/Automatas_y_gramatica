@@ -1,6 +1,11 @@
 .venv
 venv
 
+# ProyectoFinal
+ProyectoFinal/.vscode/
+ProyectoFinal/__pycache__/
+
 # Archivos de clase
 Clase*.pdf
 agents.md
+
