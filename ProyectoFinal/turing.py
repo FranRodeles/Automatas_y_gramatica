@@ -13,7 +13,7 @@ TransitionValue = Tuple[State, Symbol, Direction]
 
 
 def build_normalizer_tm(extra_symbols: Iterable[Symbol] | None = None) -> TuringMachine:
-    """Construye la MT de normalizacion selectiva con turing_machine.
+    """Construye la MT de normalizacion
 
     La MT conserva letras, digitos, espacios y simbolos criticos: $ £ € . : /
     Cualquier otro simbolo se reemplaza por un espacio en la cinta.
@@ -24,8 +24,10 @@ def build_normalizer_tm(extra_symbols: Iterable[Symbol] | None = None) -> Turing
     blank = ""
     critical_symbols = set("$£€.:/")
     accepted_symbols = set(
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
+        "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"
+        "abcdefghijklmnñopqrstuvwxyz"
+        "ÁÉÍÓÚ"
+        "áéíóú"
         "0123456789"
         " "
     ) | critical_symbols
@@ -135,7 +137,7 @@ def formal_definition() -> str:
 
 def main() -> None:
     """Ejecuta la normalizacion con el ejemplo del enunciado."""
-    message = "WIN $1000 now!"
+    message = "¡Llame al 09094100151 para usar sus minutos! Las llamadas se emiten a 10 p/min (la mafia varía). Servicio proporcionado por AOM, solo 5 GBP al mes. AOM Box61,M60 1ER hasta que te detengas. ¡Solo mayores de 18 años!"
     print(formal_definition())
     print("\nEntrada:")
     print(message)

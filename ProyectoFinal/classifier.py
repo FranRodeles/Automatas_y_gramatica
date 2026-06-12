@@ -5,7 +5,9 @@ import csv
 from tokenizer import tokenize_message
 
 
-# Pesos asignados a cada tipo de token según el enunciado
+# Punto de ajuste 1:
+# Modifica estos valores para cambiar el peso de cada tipo de token.
+# El score final de un mensaje es la suma de estos pesos.
 WEIGHTS = {
     "MONEY": 3,
     "PHONE": 3,
@@ -38,6 +40,10 @@ def classify_message(tokens: list[str], threshold: int) -> str:
         "SPAM" si la puntuación supera el umbral, "HAM" en caso contrario.
     """
     score = calculate_message_score(tokens)
+    # Punto de ajuste 2:
+    # Regla de decisión actual: SPAM solo si score > threshold.
+    # Si quieres una regla más estricta o más flexible, cambia esta línea.
+    # Ejemplo: usar ">=" en lugar de ">".
     return "SPAM" if score > threshold else "HAM"
 
 
@@ -98,7 +104,9 @@ def main() -> None:
     # Obtener la ruta absoluta del archivo CSV relativa al script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     dataset_path = os.path.join(script_dir, "SpamCollectionSpanish.csv")
-    thresholds_to_test = [2, 5, 10]  # Ejemplo de 3 valores para U
+    # Punto de ajuste 3:
+    # Lista de umbrales U a evaluar para elegir el mejor.
+    thresholds_to_test = [2, 5, 10]
 
     print(formal_definition())
     print("\nEvaluando precisión sobre 100 mensajes...")
